@@ -1,49 +1,10 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>adam taylor</title>
+---
+layout: default
+title: Adam Taylor
+---
 
-<style type="text/css">
-
-body {
-    font-family: Georgia, Palatino,” Palatino Linotype”, Times, “Times New Roman”, serif;
-    color: #444;
-    font: 14pt;
-}
-
-h1, h2, h3 {
-    font-family: Helvetica, “Helvetica Neue”, Arial, sans-serif;
-    font: 20pt;
-}
-
-#wrapper {
-    width: 960px;
-    margin: 0 auto;
-}
-
-#header {
-    <!--background: #444;-->
-    <!--color: #000;-->
-}
-
-</style>
-
-</head>
-
-<body>
-    <div id="wrapper">
-        <div id="header">
-            <h1>ADAM TAYLOR</h1>
-            <!--<ul>-->
-                <!--<li><a href="#">writing</a></li>-->
-                <!--<li><a href="#">code</a></li>-->
-                <!--<li><a href="#">about</a></li>-->
-            <!--</ul>-->
-        </div>
-        <p>My name's Adam Taylor, a Perl developer from London, UK.</p>
-        <p>Find more about me below, while I slowly republish some of my previous articles.</p>
-        <p><a href="http://twitter.com/adamtaylor">Twitter</a> | <a href="http://github.com/adamtaylor">Github</a> | <a href="http://search.cpan.org/~ajct">CPAN</a></p>
-    </div>
-</body>
-
-</html>
+{% for post in site.posts offset: 0 limit: 1 %}
+    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    {{ post.date | date_to_string }}
+    {{ post.content }}
+{% endfor %}
