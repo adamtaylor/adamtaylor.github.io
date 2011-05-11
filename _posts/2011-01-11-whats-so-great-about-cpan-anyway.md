@@ -58,7 +58,7 @@ We have three extra services that can help you when evaluating a module:
 > The objective of the group is to test as many of the
 > distributions on CPAN as possible, on as many platforms
 > as possible.
-
+>
 > The ultimate goal is to improve the portability of the
 > distributions on CPAN, and provide good feedback to the
 > authors.
