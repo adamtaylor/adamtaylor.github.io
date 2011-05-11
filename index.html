@@ -4,7 +4,7 @@ title: Adam Taylor
 ---
 
 {% for post in site.posts offset: 0 limit: 1 %}
-    <h2><a href="{{ post.url }}">{{ post.title }}</a></h2>
+    <h2><a class="title" href="{{ post.url }}">{{ post.title }}</a></h2>
     {{ post.date | date_to_string }}
     {{ post.content }}
 {% endfor %}
