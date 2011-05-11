@@ -114,11 +114,3 @@ As an aside, as well as reading the documentation through CPAN, you can view it 
 So it turns out that CPAN's awesome and Perl rocks? Great! Glad I convinced you. If you want to get involved you need to register with [PAUSE](http://pause.perl.org/pause/query) and upload modules.
 
 Check out [Dist::Zilla](http://dzil.org/), a neat way to manage your module(s) and don't forget the Kwalitee!
-
-How about making an 'I <3 CPAN' badge while you're at it?!
-
-
-
-
-
-
