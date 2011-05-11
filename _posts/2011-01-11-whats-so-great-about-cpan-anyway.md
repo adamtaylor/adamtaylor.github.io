@@ -63,7 +63,7 @@ We have three extra services that can help you when evaluating a module:
 > distributions on CPAN, and provide good feedback to the
 > authors.
 
-[What is CPAN Testers?](http://wiki.cpantesters.org/wiki/WhatIsCPANTesters)
+<cite><a href="http://wiki.cpantesters.org/wiki/WhatIsCPANTesters">http://wiki.cpantesters.org/wiki/WhatIsCPANTesters</a></cite>
 
 A bunch of people donate some spare CPU cycles to test new modules as they're
 uploaded to CPAN using a bunch of different Perls on a bunch of different
@@ -87,7 +87,7 @@ And finally, how about checking the Kwalitee of a module?
 > Kwalitee: It looks like quality, it sounds like quality, but it's not quite
 > quality
 
-[What's "Kwalitee", anyway?](http://cpants.perl.org/kwalitee.html)
+<cite><a href="http://cpants.perl.org/kwalitee.html">What's "Kwalitee", anyway?</a></cite>
 
 Each module uploaded to CPAN is tested against a bunch of Perl module development best practice metrics, for example, does it have unit tests, does it contain documentation etc.
 
