@@ -15,7 +15,7 @@
             var match = page_links[i].href.match(/http:\/\/search\.cpan\.org\/perldoc\?(.*?)$/i);
             var span = document.createElement("span");
             span.innerHTML = "&nbsp; <a href=\"http://www.metacpan.org/module/"+match[1]+"\">MetaCPAN</a>";
-            page_links[i].parentNode.insertAfter(span, page_links[i].nextSibling);
+            page_links[i].parentNode.insertBefore(span, page_links[i].nextSibling);
         }
     }
 
