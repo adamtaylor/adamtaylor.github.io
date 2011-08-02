@@ -1,11 +1,9 @@
 // ==UserScript==
-// @name          MetaCPAN Everywhere
-// @description   Add to every link to CPAN a link to MetaCPAN on a Google results page.
-// @match http://www.google.*/*
-// @namespace     http://ajct.info
-// @include       *
-
-//by Adam Taylor (http://ajct.info)
+// @name            MetaCPAN Everywhere
+// @description     Add to every link to CPAN a link to MetaCPAN on a Google results page.
+// @namespace       http://ajct.info
+// @match           http://www.google.*/*
+// @version         0.1
 // ==/UserScript==
 
 (function() {
