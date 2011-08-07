@@ -16,7 +16,7 @@ MetaCPAN page for CPAN modules that appear in Google results pages:
 
 <img src="/images/metacpan-greasemonkey.png"
 alt="MetaCPAN greasemonkey script screenshot"
-width="640px" height="422px" />
+width="640" height="422" />
 
 Currently it only works for those links that point to the perldoc? page on
 CPAN and it may well not work for everyone.
