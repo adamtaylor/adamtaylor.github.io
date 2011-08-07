@@ -14,7 +14,9 @@ were appearing in Google results pages.
 So last night I wrote a quick and dirty greasemonkey script to add a link to the
 MetaCPAN page for CPAN modules that appear in Google results pages:
 
-<img src="/images/metacpan-greasemonkey.png" />
+<img src="/images/metacpan-greasemonkey.png"
+alt="MetaCPAN greasemonkey script screenshot"
+width="640px" height="422px" />
 
 Currently it only works for those links that point to the perldoc? page on
 CPAN and it may well not work for everyone.
