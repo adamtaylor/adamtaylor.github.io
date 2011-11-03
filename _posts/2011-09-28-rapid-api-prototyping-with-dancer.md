@@ -3,6 +3,8 @@ layout: post
 title: Rapid API prototyping with Dancer and DBIx::Class
 --
 
+<img src="/images/dancer-perl-api-screenshot.png" alt="Dancer API Screenshot" />
+
 Thursday and Friday last week were hack days here at NAP HQ, which is a time
 to work on anything you like, so long as it's vaguely business related. The
 project I embarked on (see screenshot above) required an API and I thought this
@@ -31,10 +33,10 @@ With traditional SQL, each API method might need to perform the exact query requ
 
 Also, by using <a href="https://metacpan.org/module/DBIx::Class::Schema::Loader">DBIx::Class::Schema::Loader</a> it's ridiculously quick to get up and running:
 <ul>
-	<li>Create a database somewhere</li>
-	<li>Create an SQL script to generate the required table(s)</li>
-	<li>Run the script on the database</li>
-	<li>Run schema_loader to generate the DBIC classes: `perl -MDBIx::Class::Schema::Loader=make_schema_at,dump_to_dir:./lib -e 'make_schema_at("Schema::Namespace", { debug =&gt; 1 }, [ "dbi:Pg:dbname=database_name","user", "pass" ])'`</li>
+    <li>Create a database somewhere</li>
+    <li>Create an SQL script to generate the required table(s)</li>
+    <li>Run the script on the database</li>
+    <li>Run schema_loader to generate the DBIC classes: `perl -MDBIx::Class::Schema::Loader=make_schema_at,dump_to_dir:./lib -e 'make_schema_at("Schema::Namespace", { debug => 1 }, [ "dbi:Pg:dbname=database_name","user", "pass" ])'`</li>
 </ul>
 Bob's your uncle! You now have usable DBIC classes in lib/.
 
@@ -61,7 +63,7 @@ Set the default serializer in your app (or better, in your config.yml):
 Then in your API method you can do something like:
 
     get 'foo' => sub {
-       return { foo =&gt; bar }
+       return { foo => bar }
     }
 
 And your application will return properly formatted JSON (or whatever) data, with the correct HTTP headers etc.
@@ -74,30 +76,30 @@ In our API we had a number of filters that could be applied to every API method 
 
     before sub {
 
-        my $country = params-&gt;{country};
-        my $limit = params-&gt;{limit};
-        my $activity_type = params-&gt;{activity_type};
-        my $since = params-&gt;{since};
+        my $country = params->{country};
+        my $limit = params->{limit};
+        my $activity_type = params->{activity_type};
+        my $since = params->{since};
 
         my $search_args = {};
-        $search_args-&gt;{country} = $country if defined $country;
-        $search_args-&gt;{activity_type} = $activity_type if defined $activity_type;
-        $search_args-&gt;{datetime} = { '&gt;' =&gt; $since } if defined $since;
+        $search_args->{country} = $country if defined $country;
+        $search_args->{activity_type} = $activity_type if defined $activity_type;
+        $search_args->{datetime} = { '>' => $since } if defined $since;
 
         my $modifier_args = {};
-        $modifier_args-&gt;{order_by} = { -desc =&gt; 'id' };
-        $modifier_args-&gt;{rows} = $limit if defined $limit;
+        $modifier_args->{order_by} = { -desc => 'id' };
+        $modifier_args->{rows} = $limit if defined $limit;
 
-        my $activity_rs = schema-&gt;resultset('Activity')-&gt;search(
+        my $activity_rs = schema->resultset('Activity')->search(
             $search_args,
             $modifier_args,
         );
 
-        var activity_rs =&gt; $activity_rs;
+        var activity_rs => $activity_rs;
 
-        my $path = request-&gt;path_info;
+        my $path = request->path_info;
 
-        request-&gt;path_info( $path );
+        request->path_info( $path );
     };
 
 So this method, which is called before each API method, stores a (possibly filtered) ResultSet into <a href="https://metacpan.org/module/Dancer#vars">"vars"</a> (another keyword available in any other method - that'd be the stash in Catalyst) and then passes the request onto the originally requested method.
@@ -109,8 +111,8 @@ Similar to before filters are <a href="https://metacpan.org/module/Dancer#after"
     after sub {
         my $response = shift;
 
-        $response-&gt;{content} = params-&gt;{callback} . '(' . $response-&gt;{content} . ')'
-            if params-&gt;{callback};
+        $response->{content} = params->{callback} . '(' . $response->{content} . ')'
+            if params->{callback};
     };
 
 ###In summary...###
