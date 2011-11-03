@@ -1,7 +1,7 @@
---
+---
 layout: post
 title: Rapid API prototyping with Dancer and DBIx::Class
---
+---
 
 <img src="/images/dancer-perl-api-screenshot.png" alt="Dancer API Screenshot" />
 
