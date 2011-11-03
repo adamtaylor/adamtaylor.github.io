@@ -5,7 +5,7 @@ title: Rapid API prototyping with Dancer and DBIx::Class
 
 <img src="/images/dancer-perl-api-screenshot.png" alt="Dancer API Screenshot" />
 
-Thursday and Friday last week were hack days here at NAP HQ, which is a time
+Thursday and Friday last week were hack days at work, which is a time
 to work on anything you like, so long as it's vaguely business related. The
 project I embarked on (see screenshot above) required an API and I thought this
 would be a good opportunity to use <a href="http://www.perldancer.org">Dancer</a> at work.
