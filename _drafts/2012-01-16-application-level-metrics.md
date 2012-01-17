@@ -84,19 +84,30 @@ attracted me to StatsD was the ability to increment counters, so everytime
 your application processed x you could fire off a StatsD packet incrementing the
 counter, using Gmetric directly, you can't do this. You _have_ to send total values.
 This would either require maintaining counters in your application, or sending
-counts per second.
+counts per time interval. This is now starting to sound less than ideal...
 
 Log Based Metric Collection
 ===========================
 
-Parse and filter log files. Output to where-ever.
+An alternative to direct metric collection from within an application is to parse
+and filter the log files produced by the application.
 
 ### Logster ###
 
-[Logster](https://github.com/etsy/logster) is a tool for tailing logfiles and sending interesting info to ganglia or graphite. 
+[Logster](https://github.com/etsy/logster) is another Etsy tool for tailing
+log files and sending interesting info to ganglia or graphite. The idea is to
+run it every x minutes under cron.
 
-- quite basic/simple
-- must write custom parsers in python
+On the positive side: it's basic and simple, easy to install, and only
+relies on one additional package (logcheck). It comes with a few example parsers
+but you'll probably have to write your own custom parsers.
+
+These are simple Python scripts that extend a base class.
+
+The negetives are: I have to write Python :), the default configuration of logcheck
+appears to send an hourly email about something or other (I haven't investigated
+what exactly it's doing yet) and you'll probably end up with lots of grungy,
+regex heavy, parser scripts lying around.
 
 ### Logstash ###
 
@@ -104,6 +115,37 @@ Parse and filter log files. Output to where-ever.
 
     "Ship logs from any source, parse them, get the right timestamp, index them, and search them."
 
-- requires either MRI ruby 1.9.2
-- jruby JAR package
-- many more possibilities -> elasticsearch + web interface
+Logstash is a bit like Logster but more comprehensive and feature heavy.
+Conceptually, it considers the problem of gleaning metrics [from log files] to
+have three parts:
+
+- input: log files are just one of the input formats supported
+- filter: parsing the data
+- output: outputting the data somewhere for further processing or storage
+
+You could still use it to output the data to Ganglia or Graphite, but it also
+has its own web interface for log searching and viewing that uses an ElasticSearch
+backend.
+
+It also has baked in functionality to aggregate logs from multiple nodes.
+
+Another positive, is that it uses a Ruby library called
+[Grok](http://logstash.net/docs/1.0.17/filters/grok) to help write the
+parsing scripts.  This allows you to write human readable, more reusable scripts.
+
+A downside of logstash is that it's more complex. The requirements are either the
+so called "monolithic JAR", which includes ElasticSearch, or MRI Ruby >= 1.9.2.
+
+Vague Conclusions
+=================
+
+Time to draw some vague conclusions; I've already ruled out direct metric
+collection, so that leaves me with the log parsing.
+
+Logstash has the potentially to be really useful but the time required to
+investigate, configure and probably require help from others works against
+it's favour.
+
+In our specific case (one application, runnong on one box) Logster looks like
+the way forward because of it's simplicity. It shouldn't take too long to get
+it feeding Ganglia.
