@@ -41,7 +41,10 @@ application events so using log based metric collection may be a lower friction
 and lower cost approach to starting to collect application metrics. The downside
 is that developers have to write various parsing scripts for different log formats.
 
-
+Alternatively developers could litter their application with direct calls to metric
+collection systems. This negates the need to parse log files but adds more noise
+to the codebase, unless you
+[utilise metaprogramming techniques](http://www.shopify.com/technology/3709232-statsd-at-shopify).
 
 Direct Metric Collection
 ========================
@@ -52,12 +55,36 @@ Direct Metric Collection
 
     "A network daemon for aggregating statistics (counters and timers), rolling them up, then sending them to graphite."
 
-http://www.shopify.com/technology/3709232-statsd-at-shopify
-metaprogramming -> https://github.com/shopify/statsd-instrument
+StatsD is a network daemon that accepts packets over UDP (to minimise application
+impact), which sends batch updates to Ganglia for trending and graphing.
 
-- gmond/gmetric directly
+There client libraries available in many languages, including
+[Perl](https://metacpan.org/module/Net::Statsd).
 
-Pump stuff straight into ganglia. Commandline client. Easy to use.
+If you're starting to collect metrics from scratch, it's probably well worth
+investigation StatsD (and graphite). However, at work, we already have the
+infrastructure in place to collect metrics using Ganglia.
+
+Short of modifying StatsD to send the metrics to Ganglia, or setting
+up the infrastructure to collect metrics with Graphite (which I briefly tried
+and failed at previously), we'll probably give StatsD a miss at work for now.
+
+### Gmetric ###
+
+Ganglia has a command line client called gmetric that allows you to easily send
+metric values straight to Ganglia (well roughly, there's some multi-node collection
+details but they're not important in this discussion) and, again, there are
+client libraries in many languages, including various
+[implementations](https://metacpan.org/module/Ganglia::Gmetric)
+[in](https://metacpan.org/module/Ganglia::Gmetric::PP)
+[Perl](https://metacpan.org/module/Ganglia::Gmetric::XS).
+
+Okay, sounds like a good alternative to StatsD. However, the thing that
+attracted me to StatsD was the ability to increment counters, so everytime
+your application processed x you could fire off a StatsD packet incrementing the
+counter, using Gmetric directly, you can't do this. You _have_ to send total values.
+This would either require maintaining counters in your application, or sending
+counts per second.
 
 Log Based Metric Collection
 ===========================
