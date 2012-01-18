@@ -1,4 +1,7 @@
-http://www.jedi.be/blog/ general monitoring/metric articles & links
+---
+layout: post
+title: A brief look at application level metrics
+---
 
 At work, like many organisations, we have a large collection of system metrics,
 created by our sysops teams but we (the developers) are less good at thinking
@@ -142,10 +145,29 @@ Vague Conclusions
 Time to draw some vague conclusions; I've already ruled out direct metric
 collection, so that leaves me with the log parsing.
 
-Logstash has the potentially to be really useful but the time required to
+Logstash has the potential to be really useful but the time required to
 investigate, configure and probably require help from others works against
 it's favour.
 
 In our specific case (one application, runnong on one box) Logster looks like
 the way forward because of it's simplicity. It shouldn't take too long to get
-it feeding Ganglia.
+it feeding Ganglia. We'll see...
+
+Further Readeing
+================
+
+These are stolen from https://github.com/monitoringsucks/:
+
+- http://theoryandlogic.com/post/5890089120/the-ideal-monitoring-service
+- http://www.conigliaro.org/2011/05/31/monitoring-as-code/
+- http://lusislog.blogspot.com/2011/06/why-monitoring-sucks.html
+- http://obfuscurity.com/2011/07/Monitoring-Sucks-Do-Something-About-It
+- http://obfuscurity.com/2011/07/Robots-Are-Cool-and-Shit-But-Seriously
+- http://lusislog.blogspot.com/2011/07/monitoring-sucks-watch-your-language.html
+
+Some further links recommended by colleagues:
+
+- http://www.jedi.be/blog/2012/01/03/monitoring-wonderland-survey-introduction/
+- http://www.jedi.be/blog/2012/01/03/monitoring-wonderland-metrics-api-gateways/
+- http://www.jedi.be/blog/2012/01/03/monitoring-wonderland-nagios-the-mighty-beast/
+- http://www.jedi.be/blog/2012/01/04/monitoring-wonderland-moving-up-the-stack-application-user-metrics/
