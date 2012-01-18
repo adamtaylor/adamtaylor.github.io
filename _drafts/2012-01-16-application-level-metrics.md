@@ -5,8 +5,8 @@ title: A brief look at application level metrics
 
 At work, like many organisations, we have a large collection of system metrics,
 created by our sysops teams but we (the developers) are less good at thinking
-about application level metrics. I've taken it upon myself to investigate
-different methods for collecting metrics from our applications.
+about application level metrics. I've decided to investigate different methods
+for collecting metrics from our applications.
 
 A Very Quick Introduction To Application Metrics
 ================================================
@@ -65,7 +65,7 @@ There client libraries available in many languages, including
 [Perl](https://metacpan.org/module/Net::Statsd).
 
 If you're starting to collect metrics from scratch, it's probably well worth
-investigation StatsD (and graphite). However, at work, we already have the
+investigating StatsD (and graphite). However, at work, we already have the
 infrastructure in place to collect metrics using Ganglia.
 
 Short of modifying StatsD to send the metrics to Ganglia, or setting
@@ -83,7 +83,7 @@ client libraries in many languages, including various
 [Perl](https://metacpan.org/module/Ganglia::Gmetric::XS).
 
 Okay, sounds like a good alternative to StatsD. However, the thing that
-attracted me to StatsD was the ability to increment counters, so everytime
+attracted me to StatsD was the ability to increment counters, so every time
 your application processed x you could fire off a StatsD packet incrementing the
 counter, using Gmetric directly, you can't do this. You _have_ to send total values.
 This would either require maintaining counters in your application, or sending
@@ -107,7 +107,7 @@ but you'll probably have to write your own custom parsers.
 
 These are simple Python scripts that extend a base class.
 
-The negetives are: I have to write Python :), the default configuration of logcheck
+The negatives are: I have to write Python :), the default configuration of logcheck
 appears to send an hourly email about something or other (I haven't investigated
 what exactly it's doing yet) and you'll probably end up with lots of grungy,
 regex heavy, parser scripts lying around.
@@ -149,14 +149,18 @@ Logstash has the potential to be really useful but the time required to
 investigate, configure and probably require help from others works against
 it's favour.
 
-In our specific case (one application, runnong on one box) Logster looks like
+In our specific case (one application, running on one box) Logster looks like
 the way forward because of it's simplicity. It shouldn't take too long to get
 it feeding Ganglia. We'll see...
 
-Further Readeing
-================
+Further Reading
+===============
 
-These are stolen from https://github.com/monitoringsucks/:
+My little investigation has been quite brief and very specific to our situation;
+for more general information about monitoring and metrics collection, take a look
+at the following articles.
+
+These are taken from https://github.com/monitoringsucks/:
 
 - http://theoryandlogic.com/post/5890089120/the-ideal-monitoring-service
 - http://www.conigliaro.org/2011/05/31/monitoring-as-code/
