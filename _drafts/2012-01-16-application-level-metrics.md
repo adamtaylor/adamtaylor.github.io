@@ -4,7 +4,7 @@ title: A brief look at application level metrics
 ---
 
 At work, like many organisations, we have a large collection of system metrics,
-created by our sysops teams but we (the developers) are less good at thinking
+created by our techops teams but we (the developers) are less good at thinking
 about application level metrics. I've decided to investigate different methods
 for collecting metrics from our applications.
 
@@ -17,7 +17,7 @@ CPU usage? Memory usage? Free disk space?
 These are all very important metrics to collect but they're obviously very
 low level metrics.
 
-There's an additional higher level of metrics that can be collected, application
+There's an additional, higher level of metrics that can be collected; application
 metrics. These could be things like:
 
 - number of x processed (where x is an important function of the application)
@@ -61,7 +61,7 @@ Direct Metric Collection
 StatsD is a network daemon that accepts packets over UDP (to minimise application
 impact), which sends batch updates to Ganglia for trending and graphing.
 
-There client libraries available in many languages, including
+There are client libraries available in many languages, including
 [Perl](https://metacpan.org/module/Net::Statsd).
 
 If you're starting to collect metrics from scratch, it's probably well worth
@@ -97,7 +97,7 @@ and filter the log files produced by the application.
 
 ### Logster ###
 
-[Logster](https://github.com/etsy/logster) is another Etsy tool for tailing
+[Logster](https://github.com/etsy/logster) is another Etsy tool, for tailing
 log files and sending interesting info to ganglia or graphite. The idea is to
 run it every x minutes under cron.
 
@@ -147,10 +147,10 @@ collection, so that leaves me with the log parsing.
 
 Logstash has the potential to be really useful but the time required to
 investigate, configure and probably require help from others works against
-it's favour.
+its favour.
 
 In our specific case (one application, running on one box) Logster looks like
-the way forward because of it's simplicity. It shouldn't take too long to get
+the way forward because of its simplicity. It shouldn't take too long to get
 it feeding Ganglia. We'll see...
 
 Further Reading
