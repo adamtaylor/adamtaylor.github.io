@@ -8,8 +8,7 @@ created by our techops teams but we (the developers) are less good at thinking
 about application level metrics. I've decided to investigate different methods
 for collecting metrics from our applications.
 
-A Very Quick Introduction To Application Metrics
-================================================
+### A Very Quick Introduction To Application Metrics ###
 
 Take a minute to think about monitoring and metric collection; what comes to mind...?
 CPU usage? Memory usage? Free disk space?
@@ -49,10 +48,9 @@ collection systems. This negates the need to parse log files but adds more noise
 to the codebase, unless you
 [utilise metaprogramming techniques](http://www.shopify.com/technology/3709232-statsd-at-shopify).
 
-Direct Metric Collection
-========================
+### Direct Metric Collection ###
 
-### Statsd ###
+#### Statsd ####
 
 [StatsD](https://github.com/etsy/statsd) a tool by Etsy is described as:
 
@@ -72,7 +70,7 @@ Short of modifying StatsD to send the metrics to Ganglia, or setting
 up the infrastructure to collect metrics with Graphite (which I briefly tried
 and failed at previously), we'll probably give StatsD a miss at work for now.
 
-### Gmetric ###
+#### Gmetric ####
 
 Ganglia has a command line client called gmetric that allows you to easily send
 metric values straight to Ganglia (well roughly, there's some multi-node collection
@@ -89,13 +87,12 @@ counter, using Gmetric directly, you can't do this. You _have_ to send total val
 This would either require maintaining counters in your application, or sending
 counts per time interval. This is now starting to sound less than ideal...
 
-Log Based Metric Collection
-===========================
+### Log Based Metric Collection ###
 
 An alternative to direct metric collection from within an application is to parse
 and filter the log files produced by the application.
 
-### Logster ###
+#### Logster ####
 
 [Logster](https://github.com/etsy/logster) is another Etsy tool, for tailing
 log files and sending interesting info to ganglia or graphite. The idea is to
@@ -112,7 +109,7 @@ appears to send an hourly email about something or other (I haven't investigated
 what exactly it's doing yet) and you'll probably end up with lots of grungy,
 regex heavy, parser scripts lying around.
 
-### Logstash ###
+#### Logstash ####
 
 [Logstash](http://logstash.net/) describes itself as tool to:
 
@@ -139,8 +136,7 @@ parsing scripts.  This allows you to write human readable, more reusable scripts
 A downside of logstash is that it's more complex. The requirements are either the
 so called "monolithic JAR", which includes ElasticSearch, or MRI Ruby >= 1.9.2.
 
-Vague Conclusions
-=================
+### Vague Conclusions ###
 
 Time to draw some vague conclusions; I've already ruled out direct metric
 collection, so that leaves me with the log parsing.
@@ -153,8 +149,7 @@ In our specific case (one application, running on one box) Logster looks like
 the way forward because of its simplicity. It shouldn't take too long to get
 it feeding Ganglia. We'll see...
 
-Further Reading
-===============
+### Further Reading ###
 
 My little investigation has been quite brief and very specific to our situation;
 for more general information about monitoring and metrics collection, take a look
