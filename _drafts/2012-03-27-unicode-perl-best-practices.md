@@ -39,5 +39,71 @@ encoded back into bytes.
 
 ### Automagic Encoding Layer ###
 
-Consider a larger Perl application, for example a Catalyst web application, with
-a database (DBIx::Class) and message queues (ActiveMQ).
+Consider a larger Perl application, for example a web application, built with the
+Catalyst framework, with a database (DBIx::Class) and with message queues
+(ActiveMQ).
+
+We can start to see that we have a limited amount of places where we interact
+with the outside world and configure all these places correctly we shouldn't
+need to worry about too much in the main part of our application.
+
+... more detail ...
+
+So, our application is now a happy, stress-free microcosm of perfectly decoded
+data and we have nothing to worry about, right? Wrong!
+
+### Welcome to the new world of Unicode pain! ###
+
+Unicode forceably changes the way you think about text because everything you
+thought you knew, is no longer true...
+
+### Normalisation ###
+
+Consider the character `é`. You can't pin-point it to one unicode code character
+because it could be:
+
+é: U+00E9, otherwise known as LATIN SMALL LETTER E WITH ACCUTE
+
+*or*
+
+e + ´: U+0065 + U+0301, otherwise known as LATIN SMALL LETTER E and COMBING ACUTE ACCENT
+
+Given this lovely fact, does `'crème brûlée' eq 'crème brûlée'`?
+You can't know for sure!
+
+You can't even know if `length 'crème brûlée' == length 'crème brûlée'`.
+
+How do we fix this? We need to _normalise_ the text. The unciode standard defines
+the [normalisation forms](http://unicode.org/reports/tr15/) of characters and the
+two that are most important are decomposed and composed characters.
+
+The decomposed, or canonical decomposition, (NFD) is where the character is
+split into as many characters as possible.
+
+The decomposed form of é would be U+0065 + U+0301.
+
+The composed, or canonical composition, (NFC) is where the character is
+composed into its single representative character.
+
+The composed form of é would be U+00E9.
+
+[Unicode::Normalize](https://metacpan.org/module/Unicode::Normalize) provides,
+amongst others the methods `NFD()` and `NFC()`.
+
+So, with our example, we might instead try:
+
+    NFD('crème brûlée') eq NFD('crème brûlée')
+
+### Graphemes ###
+
+# XXX does this make sense?
+A grapheme [cluster] is a single user-visible character, a conceptual character,
+if you will.
+
+
+
+### Further Reading ###
+
+- link
+- link
+- link
