@@ -12,11 +12,13 @@ e.g. ISO-8859-1. This is the limit of one byte.
 
 Unicode has 110,000 characters; we need more bytes!
 
+
 ### UTF-8 ###
 
 UCS (Universal Character Set) Transformation Format - 8 bit represents unicode
 characters as 1 - 4 bytes and is the de facto standard encoding on the web. It
 also has excellent support in Perl (as of 5.14).
+
 
 ### UTF-8 and Perl ###
 
@@ -24,7 +26,7 @@ There are two things you need to worry about when programming: data outside your
 program and data inside your program.
 
 Outside of your program you have sequences of bytes, which can be in any encoding.
-Whereas inside your program you [should] have strings of characters, in Perl's
+Whereas inside your program you (should) have strings of characters, in Perl's
 internal string representation (which is almost UTF-8).
 
 You need to *patrol your borders*: all data coming into your program must be
@@ -94,16 +96,90 @@ So, with our example, we might instead try:
 
     NFD('crème brûlée') eq NFD('crème brûlée')
 
+
 ### Graphemes ###
 
-# XXX does this make sense?
-A grapheme [cluster] is a single user-visible character, a conceptual character,
-if you will.
+A grapheme (actually a graphmeme cluster) is a single user-visible character,
+a conceptual character, if you will.
 
+Consider
 
+    reverse split //, 'crème brûlée'
+
+You might, if you're unlucky, end up with the accents on the wrong letters
+depending on the composition of the characters.
+
+You can't know what you'll end up with because you don't know whether that
+string is made up of single unicode characters or multiple unicode characters.
+
+`\X` in a regex matches a single grapheme so the above could be written instead
+as:
+
+    reverse NFD("crème brûlée") =~ /\X/g
+
+There are other string functions that could also have problems when:
+
+    length('crème brûlée')
+    substr('crème brûlée', 0, 5)
+
+They could be re-written using the `\X` operator too:
+
+    $length++ while 'crème brûlée' =~ /\X/g
+    ($str) = 'crème brûlée' =~ /(\X{5})/
+
+This might get a bit tedious but fortunately the
+[Grapheme Cluster String module](https://metacpan.org/module/Unicode::GCString)
+provides a number of helpful string methods that works with unicode characters.
+
+### Unicode Properties ###
+
+Unicode characters have properties that can be matched in regexes with
+`\p{PROPERTY}` (and `\P{property}`.
+
+For example:
+
+    \p{Lu} # uppercase letters
+    \p{Digit} # digit
+
+See `perldoc perluniprops` for all the details.
+
+### Collation ###
+
+Standard Perl collation operators are in codepoint order, which often makes
+little sense.
+
+    sort 'd', 'é', 'f'; # dfé
+
+Luckily, we can use [Unicde::Collate](https://metacpan.org/module/Unicode::Collate)
+to fix this.
 
 ### Further Reading ###
 
-- link
-- link
-- link
+#### General ####
+
+- Joel's [Unicode Essay](http://www.joelonsoftware.com/articles/Unicode.html)
+- Tom Christiansen's [Stack Overflow Essay](http://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by-default)
+- Tom Christiansen's [Oscon 2011 Talks](http://98.245.80.27/tcpc/OSCON2011/index.html)
+
+#### Perldoc ####
+
+- [perldoc perluniintro](http://perldoc.perl.org/perluniintro.html)
+- [perldoc perlunitut](http://perldoc.perl.org/perlunitut.html)
+- [perldoc perlunicode](http://perldoc.perl.org/perlunicode.html)
+- [The "Unicode Bug"](http://perldoc.perl.org/perlunicode.html#The-%22Unicode-Bug%22)
+- ['unicode_strings' feature](http://perldoc.perl.org/feature.html#the-%27unicode_strings%27-feature)
+- [open (function)](http://perldoc.perl.org/functions/open.html) (see the section on I/O layers)
+- [open (pragma)](http://perldoc.perl.org/open.html)
+- [perldoc perluniprops](http://perldoc.perl.org/perluniprops.html)
+
+#### CPAN ####
+
+- [Encode](https://metacpan.org/module/Encode)
+- [utf8](https://metacpan.org/module/utf8)
+- [Unicode::Collate](https://metacpan.org/module/Unicode::Collate)
+- [Unicode::Normalize](http://metacpan.org/module/Unicode::Normalize)
+- [Unicode::GCString](https://metacpan.org/module/Unicode::GCString)
+- [Unicode::UCD](https://metacpan.org/module/Unicode::UCD)
+- [Unicode::Tussle](https://metacpan.org/module/Unicode::Tussle)
+
+#### Books ####
