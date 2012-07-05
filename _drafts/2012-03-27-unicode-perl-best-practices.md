@@ -3,7 +3,8 @@ layout: post
 title: Unicode Perl Best Practices
 ---
 
-bytes vs characters
+The following are notes I took during a Unicode tech talk at work by
+[Dave Cross](http://twitter.com/davorg).
 
 ### What's the problem? ###
 
@@ -160,6 +161,7 @@ to fix this.
 - Joel's [Unicode Essay](http://www.joelonsoftware.com/articles/Unicode.html)
 - Tom Christiansen's [Stack Overflow Essay](http://stackoverflow.com/questions/6162484/why-does-modern-perl-avoid-utf-8-by-default)
 - Tom Christiansen's [Oscon 2011 Talks](http://98.245.80.27/tcpc/OSCON2011/index.html)
+- Tom Christiansen's [Unicode Cookbook posts on perl.com](http://www.perl.com/pub/2012/04/)
 
 #### Perldoc ####
 
@@ -183,3 +185,6 @@ to fix this.
 - [Unicode::Tussle](https://metacpan.org/module/Unicode::Tussle)
 
 #### Books ####
+
+- Effective Perl Programming (Second Edition), Chapter 8, Unicode.
+- Programming Perl (Fourth Edition), Chapter 6, Unicode.
