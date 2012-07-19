@@ -109,7 +109,7 @@ composed into its single representative character.
 The composed form of é would be U+00E9.
 
 [Unicode::Normalize](https://metacpan.org/module/Unicode::Normalize) provides,
-amongst others the methods `NFD()` and `NFC()`.
+amongst others, the methods `NFD()` and `NFC()`.
 
 So, with our example, we might instead try:
 
@@ -136,7 +136,7 @@ as:
 
     reverse NFD("crème brûlée") =~ /\X/g
 
-There are other string functions that could also have problems when:
+There are other string functions that could also have problems:
 
     length('crème brûlée')
     substr('crème brûlée', 0, 5)
@@ -148,7 +148,7 @@ They could be re-written using the `\X` operator too:
 
 This might get a bit tedious but fortunately the
 [Grapheme Cluster String module](https://metacpan.org/module/Unicode::GCString)
-provides a number of helpful string methods that works with unicode characters.
+provides a number of helpful string methods that work with unicode characters.
 
 ### Unicode Properties ###
 
@@ -171,6 +171,14 @@ little sense.
 
 Luckily, we can use [Unicde::Collate](https://metacpan.org/module/Unicode::Collate)
 to fix this.
+
+### Conclusion ###
+
+The key take-away from the talk was to strive to configure your frameworks to
+correctly handle encoding and decoding on your behalf. We're working towards
+this at work in the places where it's not already correctly configured.
+
+There's a host of additional reading that I recommend you persue at your leisure.
 
 ### Further Reading ###
 
