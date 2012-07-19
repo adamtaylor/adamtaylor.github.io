@@ -32,7 +32,9 @@ internal string representation (which is almost UTF-8).
 
 You need to *patrol your borders*: all data coming into your program must be
 decoded into character strings and all data leaving your program must be
-encoded back into bytes.
+encoded back into bytes. Importantly, and this can be tricky in some situations,
+you need to know the encoding of your input data for when you decode it, and,
+hopefully less tricky, the encoding you want to output.
 
     # decode on the way in
     $chars = decode('utf-8', $bytes);
@@ -43,17 +45,33 @@ encoded back into bytes.
 ### Automagic Encoding Layer ###
 
 Consider a larger Perl application, for example a web application, built with the
-Catalyst framework, with a database (DBIx::Class) and with message queues
-(ActiveMQ).
+Catalyst framework, with a database and ORM (pg + DBIx::Class) and with message
+queues (ActiveMQ).
 
 We can start to see that we have a limited amount of places where we interact
-with the outside world and configure all these places correctly we shouldn't
+with the outside world and if configure all these places correctly we shouldn't
 need to worry about too much in the main part of our application.
 
-... more detail ...
+#### Postgres ####
 
-So, our application is now a happy, stress-free microcosm of perfectly decoded
-data and we have nothing to worry about, right? Wrong!
+There's a [flag you can enable in DBD::Pg](https://metacpan.org/module/DBD::Pg#pg_enable_utf8-boolean-)
+which will encode data coming back from the database as utf8 (if appropriate and
+the database was created with the correct character set).
+
+#### Catalyst #####
+
+You'll want to use
+[Catalyst::Plugin::Unicode::Encoding](https://metacpan.org/module/Catalyst::Plugin::Unicode::Encoding)
+and you probably want to turn on UTF-8 encoding in your view -
+[Template Toolkit in our case](https://metacpan.org/module/Catalyst::View::TT#Unicode).
+
+#### ActiveMQ ####
+
+Our internal ActiveMQ library also handles UTF-8 encoding/decoding on our behalf.
+
+You may have different borders to patrol but the hope is that our application is now
+a happy, stress-free microcosm of perfectly decoded data and we have nothing more
+to worry about, right? Wrong!
 
 ### Welcome to the new world of Unicode pain! ###
 
@@ -69,7 +87,7 @@ because it could be:
 
 *or*
 
-e + ´: U+0065 + U+0301, otherwise known as LATIN SMALL LETTER E and COMBING ACUTE ACCENT
+e + ´: U+0065 + U+0301, otherwise known as LATIN SMALL LETTER E and COMBINING ACUTE ACCENT
 
 Given this lovely fact, does `'crème brûlée' eq 'crème brûlée'`?
 You can't know for sure!
