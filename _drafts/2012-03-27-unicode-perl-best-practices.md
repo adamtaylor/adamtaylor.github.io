@@ -69,9 +69,9 @@ and you probably want to turn on UTF-8 encoding in your view -
 
 Our internal ActiveMQ library also handles UTF-8 encoding/decoding on our behalf.
 
-You may have different borders to patrol but the hope is that our application is now
+You may have different borders to patrol but the hope is that the application is now
 a happy, stress-free microcosm of perfectly decoded data and we have nothing more
-to worry about, right? Wrong!
+to worry about...? Wrong!
 
 ### Welcome to the new world of Unicode pain! ###
 
