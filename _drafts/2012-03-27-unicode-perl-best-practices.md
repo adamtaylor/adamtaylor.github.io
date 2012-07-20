@@ -48,22 +48,21 @@ Consider a larger Perl application, for example a web application, built with th
 Catalyst framework, with a database and ORM (pg + DBIx::Class) and with message
 queues (ActiveMQ).
 
-We can start to see that we have a limited amount of places where we interact
+We can start to see that we have a limited number of places where we interact
 with the outside world and if configure all these places correctly we shouldn't
 need to worry about too much in the main part of our application.
 
 #### Postgres ####
 
 There's a [flag you can enable in DBD::Pg](https://metacpan.org/module/DBD::Pg#pg_enable_utf8-boolean-)
-which will encode data coming back from the database as utf8 (if appropriate and
-the database was created with the correct character set).
+which will decode the UTF-8 data coming back from the database.
 
 #### Catalyst #####
 
 You'll want to use
-[Catalyst::Plugin::Unicode::Encoding](https://metacpan.org/module/Catalyst::Plugin::Unicode::Encoding)
-and you probably want to turn on UTF-8 encoding in your view -
-[Template Toolkit in our case](https://metacpan.org/module/Catalyst::View::TT#Unicode).
+[Catalyst::Plugin::Unicode::Encoding](https://metacpan.org/module/Catalyst::Plugin::Unicode::Encoding).
+You may also want to [configure your view](https://metacpan.org/module/Catalyst::View::TT#Unicode)
+to expect a specific character encoding in the template files.
 
 #### ActiveMQ ####
 
@@ -83,7 +82,7 @@ thought you knew, is no longer true...
 Consider the character `é`. You can't pin-point it to one unicode code character
 because it could be:
 
-é: U+00E9, otherwise known as LATIN SMALL LETTER E WITH ACCUTE
+é: U+00E9, otherwise known as LATIN SMALL LETTER E WITH ACUTE
 
 *or*
 
@@ -94,7 +93,7 @@ You can't know for sure!
 
 You can't even know if `length 'crème brûlée' == length 'crème brûlée'`.
 
-How do we fix this? We need to _normalise_ the text. The unciode standard defines
+How do we fix this? We need to _normalise_ the text. The unicode standard defines
 the [normalisation forms](http://unicode.org/reports/tr15/) of characters and the
 two that are most important are decomposed and composed characters.
 
