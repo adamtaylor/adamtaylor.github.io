@@ -3,7 +3,7 @@ layout: post
 title: OAuth and Catalyst
 ---
 
-I've been working on and off on a [http://cowbellhq.com](hobby Catalyst application)
+I've been working on and off on a [hobby Catalyst application](http://cowbellhq.com)
 for a while now and one of the things I was not happy with was the authentication
 system, which felt like a bit of a hack.
 
