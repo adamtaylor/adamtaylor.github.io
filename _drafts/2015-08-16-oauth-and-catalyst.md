@@ -96,116 +96,20 @@ actions and resultset/row methods and a bit of config to tie it all together.
 
 First the configuration for our app:
 
-    package MyApp;
+{% gist 9143f40ccd188c7920e3 %}
 
-    ...
+Our login actions:
 
-    __PACKAGE__->config(
-        'Plugin::ConfigLoader' => {
-            file => __PACKAGE__->path_to( 'share', 'etc' ),
-        },
-        'Plugin::Authentication' => {
-            default_realm => 'strava',
-            strava => {
-                auto_create_user => 1,
-                auto_update_user => 1,
-                class => 'Adaptor',
-                credential => {
-                    class         => 'Strava',
-                    client_id     => $client_id,
-                    client_secret => $client_secret,
-                },
-                store => {
-                    class         => 'DBIx::Class',
-                    user_model    => 'Schema::User',
-                    role_relation => 'roles',
-                    role_field    => 'name',
-                    ignore_fields_in_find => ['strava_access_token','picture','first_name','last_name','city','coutry'],
-                },
-                store_adaptor => {
-                    method => 'code',
-                    code => sub {
-                        my ($realmname, $original_authinfo, $hashref_to_config) = @_;
+{% gist 7560cdd1e7ed57910d19 %}
 
-                        use LWP::Authen::OAuth2;
-                        use JSON::XS;
-                        my $strava = LWP::Authen::OAuth2->new(
-                            service_provider => 'Strava',
-                            client_id => $client_id,
-                            client_secret => $client_secret,
-                            token_string => encode_json {
-                                access_token => $original_authinfo->{strava_access_token},
-                                _class => 'LWP::Authen::OAuth2::AccessToken::Bearer',
-                            },
-                        );
-                        my $athlete = decode_json $strava->get('https://www.strava.com/api/v3/athlete')->content;
-                        return {
-                            email => $athlete->{email},
-                            strava_access_token => $original_authinfo->{strava_access_token},
-                            picture => $athlete->{profile_medium},
-                            first_name => $athlete->{firstname},
-                            last_name => $athlete->{lastname},
-                            city => $athlete->{city},
-                            country => $athlete->{country},
-                        };
-                    },
-                }
-            },
-            facebook => {
-                auto_create_user => 1,
-                auto_update_user => 1,
-                class => 'Adaptor',
-                credential => {
-                    class => 'Facebook::OAuth2',
-                    application_id => $application_id,
-                    application_secret => $application_secret,
-                },
-                store => {
-                    class         => 'DBIx::Class',
-                    user_model    => 'Schema::User',
-                    role_relation => 'roles',
-                    role_field    => 'name',
-                    ignore_fields_in_find => ['facebook_access_token','country','city','first_name','last_name'],
-                },
-                store_adaptor => {
-                    method => 'code',
-                    code => sub {
-                        my ($realmname, $original_authinfo, $hashref_to_config) = @_;
+And, finally, our auto_create and auto_update methods:
 
-                        use Facebook::Graph; # XXX Model class?
-                        my $fb = Facebook::Graph->new(
-                            app_id => $application_id,
-                            secret => $application_secret,
-                        );
-                        $fb->access_token( $original_authinfo->{token} );
-                        my $user = $fb->fetch('me');
+{% gist e76e8e93992183207b66 %}
 
-                        my $location;
-                        if ( $user->{location}{id} ) {
-                            $location = $fb->fetch( $user->{location}{id} );
-                        };
+So, mostly with the help of
+(Catalyst::Authentication::Realm::Adaptor)[https://metacpan.org/pod/Catalyst::Authentication::Realm::Adaptor],
+we can get the exact customised login behaviour we need without hardcoding any
+hacks into the core authentication code.
 
-                        my $auth_info = {
-                            email => $user->{email},
-                            facebook_access_token => $original_authinfo->{token},
-                            first_name => $user->{first_name},
-                            last_name => $user->{last_name},
-                        };
-
-                        if ($location && $location->{location}{country}) {
-                            $auth_info->{country} = $location->{location}{country};
-                        }
-
-                        if ($location && $location->{location}{city}) {
-                            $auth_info->{city} = $location->{location}{city};
-                        }
-
-                        # TODO Facebook profile picture
-
-                        return $auth_info;
-                    },
-                },
-            },
-        },
-    );
-
+If you'd also like to use Strava for login, Catalyst::Authentication::Credential::Strava
+should be heading to CPAN soon.
