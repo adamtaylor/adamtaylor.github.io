@@ -7,7 +7,7 @@ I've been working on and off on a [hobby Catalyst application](http://cowbellhq.
 for a while now and one of the things I was not happy with was the authentication
 system, which felt like a bit of a hack.
 
-I was able to dedicate a bit of into understanding Catalyst's authentication quirks
+I was able to dedicate a bit of time into understanding Catalyst's authentication quirks
 at the weekend and really nail my approach. I couldn't find the right documentation
 to explain exactly what was required, so here's my attempt, to help anyone else
 who might be trying something similar.
@@ -66,7 +66,7 @@ authentication token because there's other useful stuff there.
 ### Catalyst::Authentication::Realm::Adaptor ###
 
 This is where I recently learnt about a really useful module called
-(Catalyst::Authentication::Realm::Adaptor)[https://metacpan.org/pod/Catalyst::Authentication::Realm::Adaptor]
+[Catalyst::Authentication::Realm::Adaptor](https://metacpan.org/pod/Catalyst::Authentication::Realm::Adaptor)
 that allows you to customise the behaviour of the authentication plugins. This is
 exactly what I had been looking for.
 
