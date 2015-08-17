@@ -102,7 +102,7 @@ And, finally, our auto_create and auto_update methods:
 {% gist e76e8e93992183207b66 %}
 
 So, mostly with the help of
-(Catalyst::Authentication::Realm::Adaptor)[https://metacpan.org/pod/Catalyst::Authentication::Realm::Adaptor],
+[Catalyst::Authentication::Realm::Adaptor](https://metacpan.org/pod/Catalyst::Authentication::Realm::Adaptor),
 we can get the exact customised login behaviour we need without hardcoding any
 hacks into the core authentication code.
 
