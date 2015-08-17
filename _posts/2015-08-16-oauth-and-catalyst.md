@@ -12,8 +12,7 @@ authentication quirks at the weekend and really nail my approach. I couldn't fin
 the right documentation to explain exactly what was required, so here's my attempt,
 to help future me and anyone else who might be trying something similar.
 
-OAuth
-=====
+### OAuth ###
 
 Let's say you have a web application, and you want to allow users to log in to your
 application, then you might want to defer the registration and authentication to
@@ -24,8 +23,7 @@ web application access to their account. This gives you access to some details o
 their account but also verifies them as a user that could also log in to your
 web application.
 
-Catalyst
-========
+### Catalyst ###
 
 [Catalyst](http://www.catalystframework.org/) is a well known Perl MVC web
 framework, akin to Ruby's Ruby on Rails or Python's Django.
@@ -33,8 +31,7 @@ framework, akin to Ruby's Ruby on Rails or Python's Django.
 Catalyst is very flexible and extensible and already has good support for
 authentication and authorisation.
 
-Catalyst::Plugin::Authentication
-================================
+### Catalyst::Plugin::Authentication ###
 
 As mentioned, Catalyst already has good authentication and authorisation support
 through [Catalyst::Plugin::Authentication](https://metacpan.org/pod/Catalyst::Plugin::Authentication).
@@ -44,8 +41,7 @@ straightforward. Oftentimes you'll use it with a backend store like
 [Catalyst::Authentication::Store::DBIx::Class](https://metacpan.org/pod/Catalyst::Authentication::Store::DBIx::Class)
 and all will be good with the world.
 
-Catalyst::Authentication::Credential::Facebook::OAuth2
-======================================================
+### Catalyst::Authentication::Credential::Facebook::OAuth2 ###
 
 If you want to defer your authentication to a third party OAuth provider, there
 already exist a number of modules to do this for you. For example, I have used
@@ -64,8 +60,7 @@ email address).
 authentication token because there's other useful stuff there.
 
 
-Catalyst::Authentication::Realm::Adaptor
-========================================
+### Catalyst::Authentication::Realm::Adaptor ###
 
 This is where I recently learnt about a really useful module called
 (Catalyst::Authentication::Realm::Adaptor)[https://metacpan.org/pod/Catalyst::Authentication::Realm::Adaptor]
@@ -81,8 +76,7 @@ by the Facebook::OAuth2 realm is `token`. This is fine if you're only setting up
 login with Facebook but if you want to support multiple OAuth providers, may not
 be as appropriate.
 
-Putting it all together
-=======================
+### Putting it all together ###
 
 So in my application, I want to provide login via Facebook and Strava. And I want to
 be able to link users from Facebook and Strava, if they login to my application
