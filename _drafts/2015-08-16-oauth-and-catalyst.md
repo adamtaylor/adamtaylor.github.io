@@ -9,7 +9,7 @@ the authentication system, which felt like a bit of a hack.
 
 I was able to dedicate a bit of time lately into understanding Catalyst's
 authentication quirks at the weekend and really nail my approach. I couldn't find
-the right documentaiton to explain exactly what was required, so here's my attempt,
+the right documentation to explain exactly what was required, so here's my attempt,
 to help future me and anyone else who might be trying something similar.
 
 OAuth
@@ -32,7 +32,7 @@ Catalyst
 [Catalyst](http://www.catalystframework.org/) is a well known Perl MVC web
 framework, akin to Ruby's Ruby on Rails or Python's Django.
 
-Catalyst is very flexible and extensible and alreay has good support for
+Catalyst is very flexible and extensible and already has good support for
 authentication and authorisation.
 
 Catalyst::Plugin::Authentication
@@ -54,15 +54,15 @@ already exist a number of modules to do this for you. For example, I have used
 [Catalyst::Authentication::Credential::Facebook::OAuth2](https://metacpan.org/pod/Catalyst::Authentication::Credential::Facebook::OAuth2)
 and it works really nicely. I also started writing my own to authenticate
 using [Strava's API](http://strava.github.io/api/). Things can start to get a bit
-tricky at this point. What if you want to customise the bahviour of the authentication
+tricky at this point. What if you want to customise the behaviour of the authentication
 plugin or do more than merely authenticate a user?
 
 In my case I had two issues:
 
-# I need to associate a user with only one account in my application, if they login
+- I need to associate a user with only one account in my application, if they login
 across the different providers but are really the same user (i.e. have the same
 email address).
-# I want to grab more information from the authentication provider than merely the
+- I want to grab more information from the authentication provider than merely the
 authentication token because there's other useful stuff there.
 
 
