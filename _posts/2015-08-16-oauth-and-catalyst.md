@@ -3,9 +3,9 @@ layout: post
 title: OAuth and Catalyst
 ---
 
-I've been working on and off on a <a href="http://cowbellhq.com">hobby Catalyst
-application</a> for a while now and one of the things I was not happy with was
-the authentication system, which felt like a bit of a hack.
+I've been working on and off on a [http://cowbellhq.com](hobby Catalyst application)
+for a while now and one of the things I was not happy with was the authentication
+system, which felt like a bit of a hack.
 
 I was able to dedicate a bit of time lately into understanding Catalyst's
 authentication quirks at the weekend and really nail my approach. I couldn't find
@@ -23,8 +23,6 @@ This is where a user can login with the third party service and authorise your
 web application access to their account. This gives you access to some details of
 their account but also verifies them as a user that could also log in to your
 web application.
-
-<Better explanation here>
 
 Catalyst
 ========
