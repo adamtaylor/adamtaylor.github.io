@@ -18,13 +18,13 @@ Let's say you have a web application, and you want to allow users to log in to y
 application, then you might want to defer the registration and authentication to
 another service, like Facebook or Google, and user their OAuth login systems.
 
-This is where a user can login with the third party service and authorise your
+This allows a user to login to the third party service and authorise your
 web application access to their account. This gives you access to some details of
-their account but also verifies them as a user that could also log in to your
+their account and also verifies them as a user that can also log in to your
 web application.
 
-You can reference [Wikipedia](https://en.wikipedia.org/wiki/OAuth) for a more
-thorough explanation.
+You can read [Wikipedia](https://en.wikipedia.org/wiki/OAuth) for a more
+thorough explanation of how it all works.
 
 ### Catalyst ###
 
@@ -49,10 +49,10 @@ and all will be good with the world.
 If you want to defer your authentication to a third party OAuth provider, there
 already exist a number of modules to do this for you. For example, I have used
 [Catalyst::Authentication::Credential::Facebook::OAuth2](https://metacpan.org/pod/Catalyst::Authentication::Credential::Facebook::OAuth2)
-and it works really nicely. I also started writing my own to authenticate
-using [Strava's API](http://strava.github.io/api/). Things can start to get a bit
-tricky at this point. What if you want to customise the behaviour of the authentication
-plugin or do more than merely authenticate a user?
+and it works really nicely. I also wanted to provide login through Strava and
+started to write my own to authenticate code using [Strava's API](http://strava.github.io/api/).
+Things get a bit tricky at this point. What if you want to customise the behaviour of the authentication
+realm (plugin) or do more than merely authenticate a user?
 
 In my case I had two issues:
 
@@ -65,7 +65,7 @@ authentication token because there's other useful stuff there.
 
 ### Catalyst::Authentication::Realm::Adaptor ###
 
-This is where I recently learnt about a really useful module called
+This is where I recently learnt about a useful module called
 [Catalyst::Authentication::Realm::Adaptor](https://metacpan.org/pod/Catalyst::Authentication::Realm::Adaptor)
 that allows you to customise the behaviour of the authentication plugins. This is
 exactly what I had been looking for.
@@ -77,14 +77,17 @@ One really simple thing you can do with this is rename the column the authentica
 realm uses to lookup and store your access code. For example, the default field used
 by the Facebook::OAuth2 realm is `token`. This is fine if you're only setting up
 login with Facebook but if you want to support multiple OAuth providers, may not
-be as appropriate.
+be as appropriate because you'll have to add multiple columns to your user table,
+as specified by the author of the authentication module.
 
 ### Putting it all together ###
 
 So in my application, I want to provide login via Facebook and Strava. And I want to
 be able to link users from Facebook and Strava, if they login to my application
 using the same account (email address). You might say that this is placing too much
-trust in the provider but I say this is what they are here for.
+trust in the provider but I say this is what they are here for. I also want to
+retrieve and store more information about the users from their profiles on the
+third party services for use in our application.
 
 We can do all of this with the modules mentioned above, some minimal controller
 actions and resultset/row methods and a bit of config to tie it all together.
@@ -106,5 +109,8 @@ So, mostly with the help of
 we can get the exact customised login behaviour we need without hardcoding any
 hacks into the core authentication code.
 
-If you'd also like to use Strava for login, Catalyst::Authentication::Credential::Strava
+It's probably worth factoring out the code to conncet to the APIs, if you
+think you'll need to reuse this in your application but I haven't done this yet.
+
+If you'd like to use Strava for login, Catalyst::Authentication::Credential::Strava
 should be heading to CPAN soon.
