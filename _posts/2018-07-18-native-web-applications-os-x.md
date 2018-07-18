@@ -3,6 +3,8 @@ layout: post
 title: Easily make native web applications on OS X
 ---
 
+<img src="/images/bbc-radio-player-native-os-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" width="75%" height="75%" />
+
 I spend a fair bit of time listening to BBC Radio from my laptop while working
 and I had a thought that it would be easier if I had a desktop app that wrapped
 it to make starting and running it easier.
@@ -62,6 +64,5 @@ This results in the following directory:
 
     1 directory, 3 files
 
-And launching `BBC Music Player.app` starts the radio app:
-
-<img src="/images/bbc-radio-player-native-os-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" width="75%" height="75%" />
+And launching `BBC Music Player.app` starts the radio app. The screenshot at
+the top is the app in action.
