@@ -7,15 +7,16 @@ I spend a fair bit of time listening to BBC Radio from my laptop while working
 and I had a thought that it would be easier if I had a desktop app that wrapped
 it to make starting and running it easier.
 
-It's easy to lose a tab running a radio station in a see of other pages and apps.
-I might be unusual but I'd rather have it as a desktop app.
+It's easy to misplace a tab running a radio station in a sea of other pages and
+apps. This might be an unpopular opinion, but I'd rather have it as a desktop app.
 
 Given the rise of [Electron](https://electronjs.org/), it seems it would be
 quite simple to create a wrapper app.
 
-Well, it is _really simple_ because someone has already open-sourced a project
-that does exactly this: give it a URL and it will do all the magic to create a
-native wrapper. It's called [nativefier](https://github.com/jiahaog/nativefier).
+Well, it is _really simple_, we don't need to learn how Electron works at all.
+This is because someone has already open-sourced a project that does exactly
+what I want: give it a URL and it will do all the magic to create a native
+wrapper. It's called [nativefier](https://github.com/jiahaog/nativefier).
 
 Installing nativefier
 --------------------
@@ -63,4 +64,4 @@ This results in the following directory:
 
 And launching `BBC Music Player.app` starts the radio app:
 
-<img src="/images/bbc-radio-player-native-ox-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" />
+<img src="/images/bbc-radio-player-native-os-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" />
