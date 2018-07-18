@@ -64,4 +64,4 @@ This results in the following directory:
 
 And launching `BBC Music Player.app` starts the radio app:
 
-<img src="/images/bbc-radio-player-native-os-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" />
+<img src="/images/bbc-radio-player-native-os-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" width="75%" height="75%" />
