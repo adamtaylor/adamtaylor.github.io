@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Easily making native applications on OS X from webpages
+title: Easily make native web applications on OS X
 ---
 
 I spend a fair bit of time listening to BBC Radio from my laptop while working
@@ -15,7 +15,7 @@ quite simple to create a wrapper app.
 
 Well, it is _really simple_ because someone has already open-sourced a project
 that does exactly this: give it a URL and it will do all the magic to create a
-native wrapper. It's called [nativifier](https://github.com/jiahaog/nativefier).
+native wrapper. It's called [nativefier](https://github.com/jiahaog/nativefier).
 
 Installing nativefier
 --------------------
@@ -63,4 +63,4 @@ This results in the following directory:
 
 And launching `BBC Music Player.app` starts the radio app:
 
-<img src="../images/bbc-radio-player-native-ox-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" />
+<img src="/images/bbc-radio-player-native-ox-x.png" alt="Screenshot of native desktop OS X BBC radio electron wrapper app" />
