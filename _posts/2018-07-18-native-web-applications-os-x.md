@@ -66,3 +66,5 @@ This results in the following directory:
 
 And launching `BBC Music Player.app` starts the radio app. The screenshot at
 the top is the app in action.
+
+It took much longer to write this than it did to create the wrapper app...
